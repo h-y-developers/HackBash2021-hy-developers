@@ -1,76 +1,92 @@
 package com.example.the_shield;
 
+import android.Manifest;
+import android.content.ContentResolver;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.telephony.SmsManager;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.the_shield.Adapters.MyAdapters;
-import com.example.the_shield.Model.MyContacts;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactActivity extends AppCompatActivity {
     RecyclerView recyclerView;
+    private List<ContactModel> contactModelList = new ArrayList<>();
+    ContactAdapter contactAdapter;
 
-    protected void onCreate(Bundle savedInstanceState){
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contacts);
+        setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.rv);
+        setDataToAdapter();
+        sendSms("6353852668","Lodu Lalit");
+        getContactInfo();
+    }
 
-        recyclerView.setHasFixedSize(true);
+    private void setDataToAdapter(){
+        contactAdapter = new ContactAdapter(contactModelList);
+        initRecyclerView();
+    }
+
+    private void sendSms(String no,String msg){
+        SmsManager sms=SmsManager.getDefault();
+        sms.sendTextMessage(no, null, msg,null,null);
+    }
+
+    private void initRecyclerView(){
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        loadContacts();
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(contactAdapter);
     }
 
-    private void loadContacts(){
-//        Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,null,null,null,ContactsContract.CommonDataKinds.Phone.NUMBER);
-        Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,null,null,null,null);
+    private void getContactInfo(){
+        Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
+        String ID = ContactsContract.Contacts._ID;
+        String DISPLAY_NAME = ContactsContract.Contacts.DISPLAY_NAME;
+        String HAS_PHONE_NUMBER = ContactsContract.Contacts.HAS_PHONE_NUMBER;
 
-        ArrayList<MyContacts> arrayList = new ArrayList<>();
+        Uri PHONE_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        String PHONE_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
+        String NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
 
-        if(cursor.getCount() > 0){
+        ContentResolver contentResolver = getContentResolver();
+        Cursor cursor = contentResolver.query(CONTENT_URI,null,null,null,DISPLAY_NAME);
+
+        if (cursor.getCount() > 0){
             while (cursor.moveToNext()){
-                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                String number = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                String CONTACT_ID = cursor.getString(cursor.getColumnIndex(ID));
+                String name = cursor.getString(cursor.getColumnIndex(DISPLAY_NAME));
 
-                if(number.length() > 0){
-                    Cursor phoneCursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", new String[]{id},null);
+                int hasPhoneNumber = cursor.getInt(cursor.getColumnIndex(HAS_PHONE_NUMBER));
+                ContactModel contactModel = new ContactModel();
+                if (hasPhoneNumber > 0){
+                    contactModel.setName(name);
 
-                    if(phoneCursor.getCount() >0){
-                        while (phoneCursor.moveToNext()){
-                            String phoneNumberValue = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
-                            MyContacts myContacts = new MyContacts(name,phoneNumberValue);
-
-                            arrayList.add(myContacts);
-                        }
+                    Cursor phoneCursor = contentResolver.query(PHONE_URI, new String[]{NUMBER},PHONE_ID+" = ?",new String[]{CONTACT_ID},null);
+                    List<String> contactList = new ArrayList<>();
+                    phoneCursor.moveToFirst();
+                    while (!phoneCursor.isAfterLast()){
+                        String phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(NUMBER)).replace(" ","");
+                        contactList.add(phoneNumber);
+                        phoneCursor.moveToNext();
                     }
+                    contactModel.setNumber(contactList);
+                    contactModelList.add(contactModel);
                     phoneCursor.close();
-
-
                 }
-
             }
-
-            MyAdapters myAdapters = new MyAdapters(this,arrayList);
-            recyclerView.setAdapter(myAdapters);
-            myAdapters.notifyDataSetChanged();
-
-        }
-        else{
-            Toast.makeText(getApplicationContext(),"No Contacts Found",Toast.LENGTH_SHORT).show();
+            contactAdapter.notifyDataSetChanged();
+            Toast.makeText(ContactActivity.this,"Contact Synced",Toast.LENGTH_SHORT).show();
         }
     }
-
 }

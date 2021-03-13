@@ -32,7 +32,7 @@ public class AddUserActivity extends AppCompatActivity {
 
         userNickName = findViewById(R.id.userNickName);
         setNickName = findViewById(R.id.setNickName);
-        contacts = findViewById(R.id.contacts);
+//        contacts = findViewById(R.id.contacts);
 
         if (ContextCompat.checkSelfPermission(AddUserActivity.this,
                 Manifest.permission.SEND_SMS) +
@@ -81,7 +81,8 @@ public class AddUserActivity extends AppCompatActivity {
 
         } else {
             Toast.makeText(getApplicationContext(),"Permission already Granted",Toast.LENGTH_SHORT).show();
-
+//            Intent intent = new Intent(AddUserActivity.this, com.example.the_shield.ContactActivity.class);
+//            startActivity(intent);
         }
 
 
@@ -118,13 +119,13 @@ public class AddUserActivity extends AppCompatActivity {
         });
 
 
-        contacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddUserActivity.this, com.example.the_shield.ContactActivity.class);
-                startActivity(intent);
-            }
-        });
+//        contacts.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(AddUserActivity.this, com.example.the_shield.ContactActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
 
@@ -163,7 +164,8 @@ public class AddUserActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE)  {
             if (grantResults.length > 0 && (grantResults[0] + grantResults[1]) == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Permission GRANTED", Toast.LENGTH_SHORT).show();
-
+//                Intent intent = new Intent(AddUserActivity.this, com.example.the_shield.ContactActivity.class);
+//                startActivity(intent);
             } else {
                 Toast.makeText(this, "Permission DENIED", Toast.LENGTH_SHORT).show();
             }
