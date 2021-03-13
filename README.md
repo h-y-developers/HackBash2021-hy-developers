@@ -16,7 +16,7 @@ Github:-https://github.com/Yashmaheta
 
 
 Harsh Chakalasiya
-Resume:- 
+Resume:- https://drive.google.com/file/d/1WTgBuMMGYLMOew_a3IMmbuCz8rC851Av/view?usp=sharing
 Linkdin:-https://www.linkedin.com/in/harsh-chakalasiya-907b36197/
 Github:-https://github.com/HarshChakalasiya/
 
