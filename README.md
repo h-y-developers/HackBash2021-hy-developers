@@ -4,4 +4,20 @@ Defination:- The messaging algorithm that will detect the hate speech or abusive
 If any person try to mollest or blackmail someone the algorithm will detect that and directly send the warning safety message to their loved once for example parents and friends etc.Which will gonna help to find out the real culprit and help to prevent the cyberbulling.
 
 
+Approach :- The machine learing approach for the detection of hate speech and analysis of words and the sentiments.
+
+
+Stack:- Python or Java for ML and Android Studio for making of an  messaging application 
+
+Yash maheta 
+Resume:- https://drive.google.com/file/d/1FDm37JzKf8QavxzrkiMIaizSHMsfgoMN/view?usp=sharing
+Linkdin:-https://www.linkedin.com/in/yash-maheta-45a21719b/
+Github:-https://github.com/Yashmaheta
+
+
+Harsh Chakalasiya
+Resume:- 
+Linkdin:-https://www.linkedin.com/in/harsh-chakalasiya-907b36197/
+Github:-https://github.com/HarshChakalasiya/
+
 
