@@ -24,4 +24,11 @@
         android:layout_below="@+id/userNickName"
         android:layout_centerHorizontal="true"/>
 
+    <Button
+        android:id="@+id/contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Contacts" />
+
 </RelativeLayout>

@@ -29,6 +29,7 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
+    private int CONTACT_PERMISSION_CODE = 1;
     private EditText textField;
     private ImageButton sendButton;
 
@@ -326,4 +327,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
+
 }
