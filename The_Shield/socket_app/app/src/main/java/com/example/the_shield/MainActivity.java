@@ -1,8 +1,10 @@
 package com.example.the_shield;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,9 +13,11 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
@@ -24,11 +28,17 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
+    public ArrayList list_of_words = new ArrayList<String>();
 
+    private String field_val;
+    private static int bad_count =0;
     private int CONTACT_PERMISSION_CODE = 1;
     private EditText textField;
     private ImageButton sendButton;
@@ -76,6 +86,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+        list_of_words.add("Suck");
+        list_of_words.add("Dick");
+        list_of_words.add("Fuck");
+        list_of_words.add("Cock");
+        list_of_words.add("Bsdk");
+        int unique  = list_of_words.size();
         Username = getIntent().getStringExtra("username");
 
         uniqueId = UUID.randomUUID().toString();
@@ -125,14 +144,76 @@ public class MainActivity extends AppCompatActivity {
         outState.putBoolean("hasConnection", hasConnection);
     }
 
+
+//    public void open(View view){
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+//        alertDialogBuilder.setMessage("Are you sure, You wanted to make decision");
+//                alertDialogBuilder.setPositiveButton("yes",
+//                        new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface arg0, int arg1) {
+//                                Toast.makeText(MainActivity.this,"You clicked yes button",Toast.LENGTH_LONG).show();
+//                            }
+//                        });
+//
+//        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                finish();
+//            }
+//        });
+//
+//        AlertDialog alertDialog = alertDialogBuilder.create();
+//        alertDialog.show();
+//    }
+
+    public void check(String s,ArrayList<String> myList){
+
+        Iterator<String> iter
+                = myList.iterator();
+        while(iter.hasNext()){
+            if (s.contains(iter.toString())) {
+                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Alert")
+                        .setMessage("Do you want to use this word ?")
+                        .setPositiveButton("Ok",null)
+                        .setNegativeButton("Cancel",null)
+                        .show();
+
+                Button positiveBtn = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                Button negativeBtn = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                positiveBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MainActivity.this,"Not closing",Toast.LENGTH_SHORT).show();
+                        bad_count += 1;
+                        dialog.dismiss();
+                    }
+                });
+                negativeBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MainActivity.this,"Ignore",Toast.LENGTH_SHORT).show();
+                        textField.setText("");
+                        dialog.dismiss();
+                    }
+                });
+            }
+
+
+        }
+    }
     public void onTypeButtonEnable(){
         textField.addTextChangedListener(new TextWatcher() {
+
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                field_val = charSequence.toString();
 
                 JSONObject onTyping = new JSONObject();
                 try {
@@ -145,6 +226,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (charSequence.toString().trim().length() > 0) {
+                    Log.i("MainActivity","Message : "+ field_val);
+//                    check(field_val,list_of_words);
                     sendButton.setEnabled(true);
                 } else {
                     sendButton.setEnabled(false);

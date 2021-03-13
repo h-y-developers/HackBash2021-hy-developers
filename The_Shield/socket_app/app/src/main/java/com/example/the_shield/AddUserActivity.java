@@ -111,10 +111,12 @@ public class AddUserActivity extends AppCompatActivity {
         setNickName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(AddUserActivity.this, com.example.the_shield.MainActivity.class);
                 intent.putExtra("username", userNickName.getText().toString());
                 startActivity(intent);
-
+                Intent i = new Intent(AddUserActivity.this,com.example.the_shield.ContactActivity.class);
+                startActivity(i);
             }
         });
 

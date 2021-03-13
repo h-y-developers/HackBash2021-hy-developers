@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:clipToPadding="false"
+
     tools:context=".MainActivity">
 
     <ListView
-        android:layout_width="match_parent"
         android:id="@+id/messageListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="2"
         android:divider="#fff"
         android:transcriptMode="normal"
-        android:verticalScrollbarPosition="right"
-        android:layout_height="wrap_content"
-        />
+        android:verticalScrollbarPosition="right" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -44,7 +44,9 @@
             android:padding="20dp"
             android:onClick="sendMessage"
             android:layout_marginHorizontal="10dp"
-            android:background="@drawable/ic_send_black_24dp"/>
+            android:maxHeight="12dp"
+            android:minHeight="6dp"
+            android:background="@drawable/sendbtn"/>
     </LinearLayout>
 
 </LinearLayout>
