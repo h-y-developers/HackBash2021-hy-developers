@@ -7,7 +7,9 @@ If any person try to mollest or blackmail someone the algorithm will detect that
 Approach :- The machine learing approach for the detection of hate speech and analysis of words and the sentiments.
 
 
-Stack:- Python or Java for ML and Android Studio for making of an  messaging application 
+Stack:- Python or Java  and Android Studio for making of an  messaging application ,SocketIO as backend.
+
+VideoLink:- https://www.youtube.com/watch?v=7IhM_bYRTK8
 
 Yash maheta 
 Resume:- https://drive.google.com/file/d/1FDm37JzKf8QavxzrkiMIaizSHMsfgoMN/view?usp=sharing
