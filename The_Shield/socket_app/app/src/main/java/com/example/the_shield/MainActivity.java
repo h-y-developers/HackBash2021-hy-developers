@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             super.handleMessage(msg);
             Log.i(TAG, "handleMessage: typing stopped " + startTyping);
             if(time == 0){
-                setTitle("SocketIO");
+                setTitle("The Shield");
                 Log.i(TAG, "handleMessage: typing stopped time is " + time);
                 startTyping = false;
                 time = 2;
@@ -137,7 +138,12 @@ public class MainActivity extends AppCompatActivity {
 
         onTypeButtonEnable();
     }
+    private void sendSms(String no,String msg){
 
+        SmsManager sms=SmsManager.getDefault();
+        sms.sendTextMessage(no, null, msg,null,null);
+        Toast.makeText(MainActivity.this,"Message Sent",Toast.LENGTH_SHORT).show();
+    }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -368,20 +374,29 @@ public class MainActivity extends AppCompatActivity {
     public void sendMessage(View view){
         Log.i(TAG, "sendMessage: ");
         String message = textField.getText().toString().trim();
-        if(TextUtils.isEmpty(message)){
-            Log.i(TAG, "sendMessage:2 ");
-            return;
+        if(message.contains("suck") || message.contains("fuck") || message.contains("cock") || message.contains("Bsdk") || message.contains("mc") || message.contains("bc") || message.contains("betichod")|| message.contains("madarchod")|| message.contains("bhetichod")|| message.contains("bhosdike")|| message.contains("bitch") || message.contains("sex")|| message.contains("anal") || message.contains("pussy")){
+            sendSms("9054191451","Your loved once is in danger");
+            sendSms("6353852668","Please don't use abusive words..");
+            textField.setText("");
         }
-        textField.setText("");
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("message", message);
-            jsonObject.put("username", Username);
-            jsonObject.put("uniqueId", uniqueId);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        else{
+            if(TextUtils.isEmpty(message)){
+                Log.i(TAG, "sendMessage:2 ");
+                return;
+            }
+            textField.setText("");
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("message", message);
+                jsonObject.put("username", Username);
+                jsonObject.put("uniqueId", uniqueId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.i(TAG, "sendMessage: 1"+ mSocket.emit("chat message", jsonObject));
         }
-        Log.i(TAG, "sendMessage: 1"+ mSocket.emit("chat message", jsonObject));
+
+
     }
 
     @Override

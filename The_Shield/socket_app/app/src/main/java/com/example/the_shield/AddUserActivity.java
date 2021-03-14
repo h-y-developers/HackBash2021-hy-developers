@@ -117,6 +117,7 @@ public class AddUserActivity extends AppCompatActivity {
                 startActivity(intent);
                 Intent i = new Intent(AddUserActivity.this,com.example.the_shield.ContactActivity.class);
                 startActivity(i);
+
             }
         });
 

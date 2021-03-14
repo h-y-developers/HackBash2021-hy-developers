@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.ContactsContract;
 import android.telephony.SmsManager;
+import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -27,6 +29,7 @@ public class ContactActivity extends AppCompatActivity {
     private List<ContactModel> contactModelList = new ArrayList<>();
     ContactAdapter contactAdapter;
     ProgressDialog progressDialog;
+    EditText userNickName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,10 +41,12 @@ public class ContactActivity extends AppCompatActivity {
         progressDialog.getWindow().setBackgroundDrawableResource(
                 android.R.color.transparent
         );
+        userNickName = findViewById(R.id.userNickName);
 //        recyclerView = findViewById(R.id.rv);
         setDataToAdapter();
-        sendSms("8511653435","Lodu Lalit");
+//        sendSms("8511653435","Please don't use abusive word..");
         getContactInfo();
+
     }
 
     @Override
@@ -78,17 +83,17 @@ public class ContactActivity extends AppCompatActivity {
         String NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
 
         ContentResolver contentResolver = getContentResolver();
-        final String[] projection = { ID, DISPLAY_NAME, NUMBER };
-        final String sa1 = "%Papa%"; // contains an "A"
+//        final String[] projection = { ID, DISPLAY_NAME, NUMBER };
+//        final String sa1 = "%Papa%"; // contains an "A"
 
-//        Cursor cursor = contentResolver.query(CONTENT_URI,null,null,null,DISPLAY_NAME);
-        Cursor cursor = contentResolver.query(CONTENT_URI, projection, DISPLAY_NAME + " LIKE ?",
-                new String[] { sa1 }, null);
+        Cursor cursor = contentResolver.query(CONTENT_URI,null,null,null,DISPLAY_NAME);
+//        Cursor cursor = contentResolver.query(CONTENT_URI, projection, DISPLAY_NAME + " LIKE ?",
+//                new String[] { sa1 }, null);
         if (cursor.getCount() > 0){
             while (cursor.moveToNext()){
                 String CONTACT_ID = cursor.getString(cursor.getColumnIndex(ID));
                 String name = cursor.getString(cursor.getColumnIndex(DISPLAY_NAME));
-
+                Log.i("ContactActivity","Contact : "+ name);
                 int hasPhoneNumber = cursor.getInt(cursor.getColumnIndex(HAS_PHONE_NUMBER));
                 ContactModel contactModel = new ContactModel();
                 if (hasPhoneNumber > 0){
