@@ -173,42 +173,42 @@ public class MainActivity extends AppCompatActivity {
 //        alertDialog.show();
 //    }
 
-    public void check(String s,ArrayList<String> myList){
-
-        Iterator<String> iter
-                = myList.iterator();
-        while(iter.hasNext()){
-            if (s.contains(iter.toString())) {
-                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Alert")
-                        .setMessage("Do you want to use this word ?")
-                        .setPositiveButton("Ok",null)
-                        .setNegativeButton("Cancel",null)
-                        .show();
-
-                Button positiveBtn = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                Button negativeBtn = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-                positiveBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(MainActivity.this,"Not closing",Toast.LENGTH_SHORT).show();
-                        bad_count += 1;
-                        dialog.dismiss();
-                    }
-                });
-                negativeBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(MainActivity.this,"Ignore",Toast.LENGTH_SHORT).show();
-                        textField.setText("");
-                        dialog.dismiss();
-                    }
-                });
-            }
-
-
-        }
-    }
+//    public void check(String s,ArrayList<String> myList){
+//
+//        Iterator<String> iter
+//                = myList.iterator();
+//        while(iter.hasNext()){
+//            if (s.contains(iter.toString())) {
+//                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+//                        .setTitle("Alert")
+//                        .setMessage("Do you want to use this word ?")
+//                        .setPositiveButton("Ok",null)
+//                        .setNegativeButton("Cancel",null)
+//                        .show();
+//
+//                Button positiveBtn = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+//                Button negativeBtn = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+//                positiveBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText(MainActivity.this,"Not closing",Toast.LENGTH_SHORT).show();
+//                        bad_count += 1;
+//                        dialog.dismiss();
+//                    }
+//                });
+//                negativeBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText(MainActivity.this,"Ignore",Toast.LENGTH_SHORT).show();
+//                        textField.setText("");
+//                        dialog.dismiss();
+//                    }
+//                });
+//            }
+//
+//
+//        }
+//    }
     public void onTypeButtonEnable(){
         textField.addTextChangedListener(new TextWatcher() {
 
@@ -376,6 +376,7 @@ public class MainActivity extends AppCompatActivity {
         String message = textField.getText().toString().trim();
         if(message.contains("suck") || message.contains("fuck") || message.contains("cock") || message.contains("Bsdk") || message.contains("mc") || message.contains("bc") || message.contains("betichod")|| message.contains("madarchod")|| message.contains("bhetichod")|| message.contains("bhosdike")|| message.contains("bitch") || message.contains("sex")|| message.contains("anal") || message.contains("pussy")){
             sendSms("9054191451","Your loved once is in danger");
+            Toast.makeText(MainActivity.this,"Please don't use abusive language",Toast.LENGTH_SHORT).show();
             sendSms("6353852668","Please don't use abusive words..");
             textField.setText("");
         }
